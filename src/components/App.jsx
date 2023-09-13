@@ -54,15 +54,33 @@ export class App extends Component {
     return filtered;
   };
 
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parseContacts = JSON.parse(contacts);
+
+    if (parseContacts) {
+      this.setState({
+        contacts: parseContacts,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   render() {
+    const { newContact, setilter, onDelete } = this;
     return (
       <div>
         <h1>Phone book</h1>
-        <ContactForm onSubmit={this.newContact} />
+        <ContactForm onSubmit={newContact} />
 
         <h2>Contacts</h2>
-        <Filter onFilter={this.setilter} />
-        <Contacts contacts={this.filteredNames()} onDelete={this.onDelete} />
+        <Filter onFilter={setilter} />
+        <Contacts contacts={this.filteredNames()} onDelete={onDelete} />
       </div>
     );
   }
