@@ -72,15 +72,15 @@ export class App extends Component {
   }
 
   render() {
-    const { newContact, setilter, onDelete } = this;
+    const { filter } = this.state;
     return (
       <div>
         <h1>Phone book</h1>
-        <ContactForm onSubmit={newContact} />
+        <ContactForm onSubmit={this.newContact} />
 
         <h2>Contacts</h2>
-        <Filter onFilter={setilter} />
-        <Contacts contacts={this.filteredNames()} onDelete={onDelete} />
+        <Filter value={filter} onFilter={this.setFilter} />
+        <Contacts contacts={this.filteredNames()} onDelete={this.onDelete} />
       </div>
     );
   }
